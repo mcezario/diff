@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: diff
+  cloud:
+    service-registry:
+      auto-registration:
+        enabled: ${AUTO_REGISTRATION:false}
+    consul:
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
+      enabled: ${CONSUL_ENABLED:true}
+      config:
+        enabled: ${CONSUL_ENABLED:true}
+        failFast: true
+
+  devtools:
+    restart:
+      log-condition-evaluation-delta: false
+  profiles:
+    active: default
+
+# Define the $LOG_PATH and $LOG_FILE variables and set the pattern to business log file
+logging:
+  path: ${LOG_PATH:${java.io.tmpdir:/tmp}}
+  file: ${LOG_FILE:${spring.application.name}-${spring.profiles.active}}
+  pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} %level [app:${spring.application.name:-},traceId:%X{X-B3-TraceId:-},spanId:%X{X-B3-SpanId:-},zipkin:%X{X-Span-Export:-}] ${PID:- } --- [%t] %logger{5} : %m%n%wEx"

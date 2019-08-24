@@ -1,0 +1,19 @@
+info:
+  build:
+    version: '@project.version@'
+    name: '@project.name@'
+    timestamp: '@maven.build.timestamp@'
+
+management.endpoints.web.exposure.include: '*'
+
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/diffAnalyser?serverSelectionTimeoutMS=1000&connectTimeoutMS=1000
+  cloud:
+    service-registry:
+      auto-registration:
+        enabled: true
