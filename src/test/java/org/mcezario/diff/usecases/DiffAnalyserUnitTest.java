@@ -9,8 +9,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Optional;
-
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
@@ -38,7 +36,7 @@ public class DiffAnalyserUnitTest {
         // Prepare
         final Diff leftSide = Diff.newLeftSide(id, content);
         Mockito.when(gateway.insertLeftSide(Mockito.anyString(), Mockito.anyString()))
-                .thenReturn(Optional.of(leftSide.getLeft()));
+                .thenReturn(leftSide.getLeft());
 
         // When
         final String leftContent = diffAnalyser.left(id, content);
@@ -58,7 +56,7 @@ public class DiffAnalyserUnitTest {
         // Prepare
         final Diff rightSide = Diff.newRightSide(id, content);
         Mockito.when(gateway.insertRightSide(Mockito.anyString(), Mockito.anyString()))
-                .thenReturn(Optional.of(rightSide.getRight()));
+                .thenReturn(rightSide.getRight());
 
         // When
         final String rightContent = diffAnalyser.right(id, content);

@@ -11,11 +11,11 @@ public class DiffAnalyser {
     private DiffDatabaseGateway gateway;
 
     public String left(final String id, final String content) {
-        return gateway.insertLeftSide(id, content).get();
+        return gateway.insertLeftSide(id, content);
     }
 
     public String right(final String id, final String content) {
-        return gateway.insertRightSide(id, content).get();
+        return gateway.insertRightSide(id, content);
     }
 
     public String difference(final long id) {
