@@ -20,7 +20,11 @@ This project had implemented unit and integration tests.
 
 - ```mvn test``` For running both
 - ```mvn -Dtest=*UnitTest test``` Only unit tests
-- ```mvn -Dtest=*IntTest test``` Only integration tests  
+- ```mvn -Dtest=*IntTest test``` Only integration tests
+
+
+All layers that represent the business are 100% covered by unit and integration tests.
+![Image description](coverage.png)
 
 ## Running
 1. Start Mongodb. If you are using docker, run the command: ```docker start mongo```
