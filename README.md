@@ -24,9 +24,118 @@ This project had implemented unit and integration tests.
 
 ## Running
 1. Start Mongodb. If you are using docker, run the command: ```docker start mongo```
-2. Start the application: ```java -jar target/diff-0.0.1-SNAPSHOT.jar```
-3. Access swagger endpoint: ```http://localhost:8080/swagger-ui.html```
+2. Compile and Package: ```mvn clean package -DskipTests``` 
+3. Start the application: ```java -jar target/diff-0.0.1-SNAPSHOT.jar```
+4. Access swagger endpoint: ```http://localhost:8080/swagger-ui.html```
 
+## Functional tests
+1. Testing two equal contents sending an encoded JSON base64 ```ewogICJjb2RlIjogMQp9```. <br>
+    Both left and right content:
+    ```json
+    {
+      "code": 1
+    }
+    ```
+
+    Sending data to LEFT endpoint: <br>
+    ```curl -X POST http://localhost:8080/v1/diff/1/left -H 'Content-Type: application/json' -d '{ "content": "ewogICJjb2RlIjogMQp9"}'```
+    
+    Sending data to RIGHT endpoint: <br>
+    ```curl -X POST http://localhost:8080/v1/diff/1/right -H 'Content-Type: application/json' -d '{ "content": "ewogICJjb2RlIjogMQp9"}'```
+    
+    Checking the result endpoint: <br>
+    ```curl -X GET http://localhost:8080/v1/diff/1```
+    
+    Result: 
+    ```
+    {"result":"EQUALS","similarity":"100"}
+    ```
+2. Testing two contents with different length. <br>
+    Left Content ```ewogICJjb2RlIjogMQp9```
+    ```json
+    {
+      "code": 1
+    }
+    ```
+    
+    Right Side ```ewogICJjb2RlIjogMzQ5ODUKfQ==```
+    ```json
+    {
+      "code": 34985
+    }
+    ```
+    
+    Sending data to LEFT endpoint: <br>
+    ```curl -X POST http://localhost:8080/v1/diff/2/left -H 'Content-Type: application/json' -d '{ "content": "ewogICJjb2RlIjogMQp9"}'```
+    
+    Sending data to RIGHT endpoint: <br>
+    ```curl -X POST http://localhost:8080/v1/diff/2/right -H 'Content-Type: application/json' -d '{ "content": "ewogICJjb2RlIjogMzQ5ODUKfQ=="}'```
+    
+    Checking the result endpoint: <br>
+    ```curl -X GET http://localhost:8080/v1/diff/2```
+    
+    Result: 
+    ```
+    {"result":"DIFFERENT_SIZE","similarity":"90.86"}
+    ```
+    
+3. 
+    **a**. Testing two contents with same length but different content. <br>
+    Left Content ```ewogICJjb2RlIjogMQp9```
+    ```json
+    {
+      "code": 1
+    }
+    ```
+    
+    Right Side ```ewogICJjb2RlIjogMgp9```
+    ```json
+    {
+      "code": 2
+    }
+    ```
+    
+    Sending data to LEFT endpoint: <br>
+    ```curl -X POST http://localhost:8080/v1/diff/3.a/left -H 'Content-Type: application/json' -d '{ "content": "ewogICJjb2RlIjogMQp9"}'```
+    
+    Sending data to RIGHT endpoint: <br>
+    ```curl -X POST http://localhost:8080/v1/diff/3.a/right -H 'Content-Type: application/json' -d '{ "content": "ewogICJjb2RlIjogMgp9"}'```
+    
+    Checking the result endpoint: <br>
+    ```curl -X GET http://localhost:8080/v1/diff/3.a```
+    
+    Result: 
+    ```
+    {"result":"DIFFERENT_CONTENT","similarity":"98.00","difference":"[{\"op\":\"replace\",\"path\":\"/code\",\"value\":2}]"}
+    ```
+    
+    **b**. Testing two contents with same length and different base64 but same json content. <br>
+    Left Content ```ewogICJjb2RlIjogMQp9``` 
+    ```json
+    {
+      "code": 1
+    }
+    ```
+    
+    Right Side ```ewogICJjb2RlIjogMX0=```
+    ```json
+    {
+      "code": 1}
+    ```
+    
+    Sending data to LEFT endpoint: <br>
+    ```curl -X POST http://localhost:8080/v1/diff/3.b/left -H 'Content-Type: application/json' -d '{ "content": "ewogICJjb2RlIjogMQp9"}'```
+    
+    Sending data to RIGHT endpoint: <br>
+    ```curl -X POST http://localhost:8080/v1/diff/3.b/right -H 'Content-Type: application/json' -d '{ "content": "ewogICJjb2RlIjogMX0="}'```
+    
+    Checking the result endpoint: <br>
+    ```curl -X GET http://localhost:8080/v1/diff/3.b```
+    
+    Result: 
+    ```
+    {"result":"DIFFERENT_CONTENT","similarity":"94.00","difference":"[]"}
+    ```
 
 ## Suggestions for improvement
 - [ ] HATEOAS
@@ -41,4 +150,4 @@ This project had implemented unit and integration tests.
   It can be solved with [Sleuth](https://spring.io/projects/spring-cloud-sleuth). It is easily integrated with Spring boot.   
 - [ ] Purge Data
   > The data are being stored in database. If we consider huge volume of access or a long time without purge the data, it can become a huge collection in terms os data unnecessarily. <br>
-  Solving this problem with a schedule solution is a good strategy. 
+  Solving this problem with a schedule solution is a good strategy. (Spring Scheduling Tasks)[https://spring.io/guides/gs/scheduling-tasks/] can be a simple and fast decision. 
