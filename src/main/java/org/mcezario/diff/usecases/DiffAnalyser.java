@@ -3,7 +3,9 @@ package org.mcezario.diff.usecases;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flipkart.zjsonpatch.JsonDiff;
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 import org.mcezario.diff.domains.Diff;
 import org.mcezario.diff.domains.DiffDetail;
@@ -16,11 +18,14 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Objects;
 
 @Slf4j
 @Service
 public class DiffAnalyser {
+
+    private static final String SAME_JSON_CONTENT = "SAME_JSON_CONTENT";
 
     @Autowired
     private DiffDatabaseGateway gateway;
@@ -72,10 +77,12 @@ public class DiffAnalyser {
 
         try {
 
-            return JsonDiff.asJson(
+            final String difference = JsonDiff.asJson(
                     objectMapper.readTree(Base64.getDecoder().decode(left)),
                     objectMapper.readTree(Base64.getDecoder().decode(right))
             ).toString();
+
+            return StringEscapeUtils.unescapeJson(StringUtils.replace(difference, Collections.emptyList().toString(), SAME_JSON_CONTENT));
 
         } catch (final Exception e) {
             log.error("Error to calculate the difference between left and right side.", e);

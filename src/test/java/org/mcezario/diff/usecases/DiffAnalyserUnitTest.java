@@ -98,7 +98,7 @@ public class DiffAnalyserUnitTest {
     }
 
     @Test
-    public void shouldCompareTwoSidesEqualsAndReturn_DIFFERENT_SIZE() {
+    public void shouldCompareTwoSidesWithDifferentLengthAndReturn_DIFFERENT_SIZE() {
         // Given
         final String id = "1";
         final String left = "eyAiY29kZSI6IDEgfQ=="; // { "code": 1 } -> Valid JSON
@@ -119,7 +119,7 @@ public class DiffAnalyserUnitTest {
     }
 
     @Test
-    public void shouldCompareTwoSidesEqualsAndReturn_DIFFERENT_CONTENT() {
+    public void shouldCompareTwoSidesWithSameLengthButDifferentContentAndReturn_DIFFERENT_CONTENT() {
         // Given
         final String id = "1";
         final String left = "eyAiY29kZSI6IDEgfQ=="; // { "code": 1 } -> Valid JSON
@@ -134,7 +134,28 @@ public class DiffAnalyserUnitTest {
         // Then
         assertEquals(ComparisonDetail.DIFFERENT_CONTENT, detail.getDetail());
         assertNotNull(detail.getSimilarity());
-        assertNotNull(detail.getDifference());
+        assertEquals("[{\"op\":\"replace\",\"path\":\"/code\",\"value\":123}]", detail.getDifference());
+
+        verify(gateway, times(1)).findDiffById(id);
+    }
+
+    @Test
+    public void shouldCompareTwoSidesWithSameLengthAndSameJsonContentAndReturn_DIFFERENT_CONTENT() {
+        // Given
+        final String id = "1";
+        final String left = "eyAiY29kZSI6IDEgfQ==";
+        final String right = "ewogICJjb2RlIjogMX0=";
+
+        // Prepare
+        Mockito.when(gateway.findDiffById(id)).thenReturn(Optional.of(Diff.newLeftSide("1", left).fillRightSide(right)));
+
+        // When
+        final DiffDetail detail = diffAnalyser.compare(id);
+
+        // Then
+        assertEquals(ComparisonDetail.DIFFERENT_CONTENT, detail.getDetail());
+        assertNotNull(detail.getSimilarity());
+        assertEquals("SAME_JSON_CONTENT", detail.getDifference());
 
         verify(gateway, times(1)).findDiffById(id);
     }
