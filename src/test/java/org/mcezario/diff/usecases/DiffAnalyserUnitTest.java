@@ -155,7 +155,7 @@ public class DiffAnalyserUnitTest {
         // Then
         assertEquals(ComparisonDetail.DIFFERENT_CONTENT, detail.getDetail());
         assertNotNull(detail.getSimilarity());
-        assertEquals("SAME_JSON_CONTENT", detail.getDifference());
+        assertEquals("SAME_JSON_STRUCTURE", detail.getDifference());
 
         verify(gateway, times(1)).findDiffById(id);
     }

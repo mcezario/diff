@@ -25,7 +25,7 @@ import java.util.Objects;
 @Service
 public class DiffAnalyser {
 
-    private static final String SAME_JSON_CONTENT = "SAME_JSON_CONTENT";
+    private static final String SAME_JSON_CONTENT = "SAME_JSON_STRUCTURE";
 
     @Autowired
     private DiffDatabaseGateway gateway;

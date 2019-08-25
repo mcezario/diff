@@ -134,7 +134,7 @@ This project had implemented unit and integration tests.
     
     Result: 
     ```
-    {"result":"DIFFERENT_CONTENT","similarity":"94.00","difference":"SAME_JSON_CONTENT"}
+    {"result":"DIFFERENT_CONTENT","similarity":"94.00","difference":"SAME_JSON_STRUCTURE"}
     ```
 
 ## Suggestions for improvement
