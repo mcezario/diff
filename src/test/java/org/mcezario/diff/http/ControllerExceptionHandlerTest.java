@@ -98,18 +98,6 @@ public class ControllerExceptionHandlerTest {
             .andExpect(jsonPath("$[0].code", is("missingParam")))
             .andExpect(jsonPath("$[0].message", is("Required String parameter 'validateRequest' is not present")));
   }
-
-  @Test
-  public void shouldValidateEnumJsonParser() throws Exception {
-
-    this.mockMvc.perform(
-            post("/api/test").contentType(MediaType.APPLICATION_JSON).content("{ \"id\": \"1\", \"name\": \"Jose\", \"age\": 20, \"brand\": \"invalid_value\" }")
-    )
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$", hasSize(1)))
-            .andExpect(jsonPath("$[0].code", is("body.incorrectValue")))
-            .andExpect(jsonPath("$[0].message", is("String \"invalid_value\": value not one of declared Enum instance names: [VISA]")));
-  }
   
 }
 

@@ -9,13 +9,13 @@ import org.mcezario.diff.domains.DiffDetail;
 public class DiffResponse {
 
     private String result;
-    private String similiraty;
-    private String differente;
+    private String similarity;
+    private String difference;
 
     public DiffResponse(final DiffDetail detail) {
         this.result = detail.getDetail().name();
-        this.similiraty = detail.getSimilarity();
-        this.differente = detail.getDifference();
+        this.similarity = detail.getSimilarity();
+        this.difference = detail.getDifference();
     }
 
 }
