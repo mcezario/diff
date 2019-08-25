@@ -96,7 +96,20 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.7</version>
+		</dependency>
 		<!-- End Apache Commons -->
+
+		<!-- Core -->
+		<dependency>
+			<groupId>com.flipkart.zjsonpatch</groupId>
+			<artifactId>zjsonpatch</artifactId>
+			<version>0.4.9</version>
+		</dependency>
+		<!-- End Core -->
 
 		<!-- Test -->
 		<dependency>

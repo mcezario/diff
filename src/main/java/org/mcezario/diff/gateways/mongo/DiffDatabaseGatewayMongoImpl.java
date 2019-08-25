@@ -8,6 +8,8 @@ import org.mcezario.diff.gateways.exceptions.DiffDatabaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class DiffDatabaseGatewayMongoImpl implements DiffDatabaseGateway {
@@ -45,6 +47,20 @@ public class DiffDatabaseGatewayMongoImpl implements DiffDatabaseGateway {
         }
 
         throw DiffDatabaseException.newRightSideException(id);
+    }
+
+    @Override
+    public Optional<Diff> findDiffById(final String id) {
+
+        try {
+            log.debug("Finding diff by id: {}", id);
+            return repository.findById(id);
+
+        } catch (final Exception e) {
+            log.error("Error to find diff by id: {}", id, e);
+        }
+
+        return Optional.empty();
     }
 
 }

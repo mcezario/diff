@@ -2,7 +2,6 @@ package org.mcezario.diff.http;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mcezario.diff.domains.exceptions.BusinessRuleException;
 import org.mcezario.diff.domains.exceptions.ExceptionId;
@@ -47,8 +46,6 @@ public class ControllerExceptionHandler {
 		log(e.id().code(), e.id().message());
 
 		final Set<ExceptionJson> json = Collections.singleton(new ExceptionJson(e));
-
-		MapUtils.emptyIfNull(e.headers()).entrySet().forEach(h -> response.addHeader(h.getKey(), h.getValue()));
 
 		return new ResponseEntity<>(json, new HttpHeaders(), e.httpStatus());
 	}

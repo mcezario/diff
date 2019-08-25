@@ -36,10 +36,6 @@ public final class ExceptionId implements Serializable {
         return String.format(MESSAGE_FORMAT, code, message);
     }
 
-    public ExceptionId withHttpStatusCode(final int httpStatusCode) {
-        return new ExceptionId(code, message, httpStatusCode);
-    }
-
     public ExceptionId withHttpStatus(final HttpStatus httpStatus) {
         return new ExceptionId(code, message, httpStatus.value());
     }

@@ -138,6 +138,44 @@ public class DiffDatabaseGatewayMongoImplUnitTest {
         assertEquals(diffToBeInserted, proposalArgumentCaptor.getValue());
     }
 
+    @Test
+    public void shouldFindDiffByIdSuccessfully() {
+
+        // Given
+        final String id = "1";
+        final String content = "RIGHT SIDE";
+
+        // Prepare
+        final Diff diff = Diff.newLeftSide(id, "LEFT SIDE");
+        when(repository.findById(id)).thenReturn(Optional.of(diff));
+
+        // When
+        final Optional<Diff> diffFound = gateway.findDiffById(id);
+
+        // Then
+        assertNotNull(diffFound);
+        assertEquals(diffFound.get(), diff);
+        verify(repository, VerificationModeFactory.times(1)).findById(id);
+    }
+
+    @Test
+    public void shouldGetExceptionWhenFindDiffById() {
+
+        // Given
+        final String id = "1";
+
+        // Prepare
+        when(repository.findById(id)).thenThrow(new MongoClientException("Error"));
+
+        // When
+        final Optional<Diff> diffFound = gateway.findDiffById(id);
+
+        // Then
+        assertNotNull(diffFound);
+        assertFalse(diffFound.isPresent());
+        verify(repository, VerificationModeFactory.times(1)).findById(id);
+    }
+
     @Test(expected = DiffDatabaseException.class)
     public void shouldGetExceptionWhenSavingLeftSide() {
         // Given
