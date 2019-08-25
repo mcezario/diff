@@ -8,10 +8,11 @@ It is a project responsible for comparing a left and right (diff-ed) in three di
 > #### Precondition <br>
 > - Mongodb. This project uses Mongodb as database. Follow above the two easiest ways to get the Mongodb installed:
 >  1. Docker. Run the command: ```docker-compose -f <path>/docker-compose.yml up --build -d```
->  2. Download and install directly in your compute. Link: https://www.mongodb.com/download-center/community
+>  2. [Download](https://www.mongodb.com/download-center/community) and install directly in your computer.
 >
-> - Java 8
-> - Maven 
+> - [Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+> - [Maven](https://maven.apache.org/download.cgi) 
+> - [Lombok](https://projectlombok.org/) 
 
 
 ## Automated tests
