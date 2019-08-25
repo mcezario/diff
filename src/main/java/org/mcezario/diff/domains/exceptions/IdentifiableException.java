@@ -2,9 +2,6 @@ package org.mcezario.diff.domains.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class IdentifiableException extends RuntimeException {
 
 	private static final long serialVersionUID = 2319108117813027799L;

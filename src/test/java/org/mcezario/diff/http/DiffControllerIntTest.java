@@ -2,8 +2,6 @@ package org.mcezario.diff.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.internal.dynalink.linker.ConversionComparator;
-import org.apache.commons.lang3.builder.DiffResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mcezario.diff.domains.ComparisonDetail;
@@ -13,7 +11,6 @@ import org.mcezario.diff.usecases.DiffAnalyser;
 import org.mcezario.diff.usecases.exceptions.CalculateDifferenceException;
 import org.mcezario.diff.usecases.exceptions.DiffNotFoundException;
 import org.mcezario.diff.usecases.exceptions.RequiredSidesException;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,13 +19,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.isIn;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
