@@ -106,7 +106,7 @@ This project had implemented unit and integration tests.
     
     Result: 
     ```
-    {"result":"DIFFERENT_CONTENT","similarity":"98.00","difference":"[{\"op\":\"replace\",\"path\":\"/code\",\"value\":2}]"}
+    {"result":"DIFFERENT_CONTENT","similarity":"98.00","difference":"[{"op":"replace","path":"/code","value":2}]"}
     ```
     
     **b**. Testing two contents with same length and different base64 but same json content. <br>
@@ -134,7 +134,7 @@ This project had implemented unit and integration tests.
     
     Result: 
     ```
-    {"result":"DIFFERENT_CONTENT","similarity":"94.00","difference":"[]"}
+    {"result":"DIFFERENT_CONTENT","similarity":"94.00","difference":"SAME_JSON_CONTENT"}
     ```
 
 ## Suggestions for improvement
