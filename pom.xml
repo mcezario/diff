@@ -140,10 +140,10 @@
 			</plugin>
 
 			<!-- GIT COMMIT ID PLUGIN CONFIGURATION -->
-<!--			<plugin>-->
-<!--				<groupId>pl.project13.maven</groupId>-->
-<!--				<artifactId>git-commit-id-plugin</artifactId>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+			</plugin>
 			<!-- GIT COMMIT ID PLUGIN CONFIGURATION -->
 		</plugins>
 	</build>
