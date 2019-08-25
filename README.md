@@ -155,4 +155,4 @@ All layers that represent the business are 100% covered by unit and integration 
   It can be solved with [Sleuth](https://spring.io/projects/spring-cloud-sleuth). It is easily integrated with Spring boot.   
 - [ ] Purge Data
   > The data are being stored in database. If we consider huge volume of access or a long time without purge the data, it can become a huge collection in terms os data unnecessarily. <br>
-  Solving this problem with a schedule solution is a good strategy. (Spring Scheduling Tasks)[https://spring.io/guides/gs/scheduling-tasks/] can be a simple and fast decision. 
+  Solving this problem with a schedule solution is a good strategy. [Spring Scheduling Tasks](https://spring.io/guides/gs/scheduling-tasks/) can be a simple and fast decision. 
