@@ -1,9 +1,9 @@
 # Diff-ed comparator.
 
 It is a project responsible for comparing a left and right (diff-ed) in three different ways:  
-1. both sides exactly equals, 
-2. length different, 
-3. Same length but contents different.
+1. Both sides exactly equals, 
+2. Different length, 
+3. Same length but different contents.
 
 > #### Precondition <br>
 > - Mongodb. This project uses Mongodb as database. Follow above the two easiest ways to get the Mongodb installed:
@@ -17,7 +17,7 @@ It is a project responsible for comparing a left and right (diff-ed) in three di
 
 ## Automated tests
 
-This project had implemented unit and integration tests. 
+This project implements unit and integration tests. 
 
 - ```mvn test``` For running both
 - ```mvn -Dtest=*UnitTest test``` Only unit tests
@@ -31,7 +31,7 @@ All layers that represent the business are 100% covered by unit and integration 
 1. Start Mongodb. If you are using docker, run the command: ```docker start mongo```
 2. Compile and Package: ```mvn clean package -DskipTests``` 
 3. Start the application: ```java -jar target/diff-0.0.1-SNAPSHOT.jar```
-4. Access swagger endpoint: ```http://localhost:8080/swagger-ui.html```
+4. Access swagger documentation: ```http://localhost:8080/swagger-ui.html```
 
 ## Functional tests
 1. Testing two equal contents sending an encoded JSON base64 ```ewogICJjb2RlIjogMQp9```. <br>
@@ -63,7 +63,7 @@ All layers that represent the business are 100% covered by unit and integration 
     }
     ```
     
-    Right Side ```ewogICJjb2RlIjogMzQ5ODUKfQ==```
+    Right Content ```ewogICJjb2RlIjogMzQ5ODUKfQ==```
     ```json
     {
       "code": 34985
@@ -93,7 +93,7 @@ All layers that represent the business are 100% covered by unit and integration 
     }
     ```
     
-    Right Side ```ewogICJjb2RlIjogMgp9```
+    Right Content ```ewogICJjb2RlIjogMgp9```
     ```json
     {
       "code": 2
@@ -114,7 +114,7 @@ All layers that represent the business are 100% covered by unit and integration 
     {"result":"DIFFERENT_CONTENT","similarity":"98.00","difference":"[{"op":"replace","path":"/code","value":2}]"}
     ```
     
-    **b**. Testing two contents with same length and different base64 but same json content. <br>
+    **b**. Testing two contents with same length and different base64, but same json content. <br>
     Left Content ```ewogICJjb2RlIjogMQp9``` 
     ```json
     {
@@ -122,7 +122,7 @@ All layers that represent the business are 100% covered by unit and integration 
     }
     ```
     
-    Right Side ```ewogICJjb2RlIjogMX0=```
+    Right Content ```ewogICJjb2RlIjogMX0=```
     ```json
     {
       "code": 1}
