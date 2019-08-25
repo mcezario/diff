@@ -4,11 +4,11 @@ import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.mcezario.diff.http.json.DiffResponse;
 import org.mcezario.diff.http.json.EncodedDataRequest;
+import org.mcezario.diff.http.json.ExceptionJson;
 import org.mcezario.diff.usecases.DiffAnalyser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping(value = "/v1/diff/{id}")
-@Api(tags = "Diff management", produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(tags = "Diff API management", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DiffController {
 
     @Autowired
@@ -25,47 +25,46 @@ public class DiffController {
 
     @ApiOperation(value = "Resource to receive the left side of comparison.", response = String.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "CREATED"),
-            @ApiResponse(code = 400, message = "Fields validation."),
-            @ApiResponse(code = 500, message = "Internal Server Error")
+            @ApiResponse(code = 400, message = "Request Validation", response = ExceptionJson.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = ExceptionJson.class)
     })
     @Validated
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/left", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity leftSide(@PathVariable String id, @Valid @RequestBody EncodedDataRequest request) {
+    public void leftSide(@PathVariable String id, @Valid @RequestBody EncodedDataRequest request) {
 
+        log.debug("Received the left side with id {}", id);
         diffAnalyser.left(id, request.getContent());
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Resource to receive the right side of comparison.")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "CREATED"),
-            @ApiResponse(code = 400, message = "Fields validation."),
-            @ApiResponse(code = 500, message = "Internal Server Error")
+            @ApiResponse(code = 400, message = "Request Validation", response = ExceptionJson.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = ExceptionJson.class)
     })
     @Validated
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/right", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity rightSide(@PathVariable String id, @Valid @RequestBody EncodedDataRequest request) {
+    public void rightSide(@PathVariable String id, @Valid @RequestBody EncodedDataRequest request) {
 
+        log.debug("Received the right side with id {}", id);
         diffAnalyser.right(id, request.getContent());
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Resource to receive the right side of comparison.", response = String.class)
+    @ApiOperation(value = "Resource to compare the left and right side.", response = DiffResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
+            @ApiResponse(code = 404, message = "Diff not found", response = ExceptionJson.class),
+            @ApiResponse(code = 422, message = "Business Validation", response = ExceptionJson.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = ExceptionJson.class)
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public ResponseEntity<DiffResponse> result(@PathVariable String id) {
+    public DiffResponse result(@PathVariable String id) {
 
-        return new ResponseEntity<>(new DiffResponse(diffAnalyser.compare(id)), HttpStatus.OK);
+        log.debug("Received a request to compare the result of diff id {}", id);
+        return new DiffResponse(diffAnalyser.compare(id));
     }
 
 }
