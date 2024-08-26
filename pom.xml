@@ -15,7 +15,7 @@
 	<description>Project responsible to compare left and right side and show the difference between them.</description>
 
 	<properties>
-		<springfox-swagger-ui.version>2.8.0</springfox-swagger-ui.version>
+		<springfox-swagger-ui.version>2.10.0</springfox-swagger-ui.version>
 		<java.version>1.8</java.version>
 		<sonar.exclusions>
 			**/diff/DiffApplication.java
